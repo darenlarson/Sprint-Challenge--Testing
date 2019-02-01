@@ -43,7 +43,7 @@ describe('server.js', () => {
             expect(response.status).toBe(201);
         });
 
-        it('should return response { message: "Game successfully added }', async () => {
+        it('should return response { message: "Game successfully added" }', async () => {
             // The body includes all of the required fields.
             const body = { title: 'Pacman', genre: 'Arcade', releaseYear: 1980 };
             const expected = { message: 'Game successfully added' };

@@ -5,7 +5,24 @@ const server = express();
 server.use(express.json());
 
 server.get('/games', async (req, res) => {
-    const games = await db('games');
-    
-    res.status(200).json(games)
+    db.getAll()
+        .then(games => {
+            res.status(200).json(games);
+        });
+});
+
+server.post('/games', async (req, res) => {
+    const game = req.body;
+
+    if (game.title && game.genre) {
+        db.insert(game)
+            .then(game => {
+                res.status(201).json({ message: 'Game successfully added' });
+            })
+            .catch(err => {
+                res.status(500).json(err);
+            });
+    } else {
+        res.status(422).json({ message: 'Game not added. Please provide all required fields.' });
+    };
 });
