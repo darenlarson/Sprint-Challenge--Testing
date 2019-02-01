@@ -78,5 +78,29 @@ describe('server.js', () => {
 
             expect(response.body).toEqual(expected);
         });
+
+        // it('should fail to insert the game because it is not unique, and respond with stats 405', async () => {
+        //     const body1 = { name: 'Pacman', genre: 'Arcade', releaseYear: '1980' };
+        //     // body2 is a duplicate of body1 and should not be able to be added if body1 is in the database.
+        //     const body2 = { name: 'Pacman', genre: 'Arcade', releaseYear: '1980' };
+
+        //     await request(server).post('/games').send(body1);
+            
+        //     let response = await request(server).post('/games').send(body2);
+
+        //     expect(response.status).toBe(405);
+        // });
+    });
+
+    describe('GET /games/:id endpoint', () => {
+        it('should respond with code 200 OK', async () => {
+            const body = { name: 'Pacman', genre: 'Arcade', releaseYear: '1980' };
+
+            let responsePost = await request(server).post('/games').send(body);
+            expect(responsePost.status).toBe(201);
+
+            let responseGet = await request(server).get('/games/1');
+            expect(responseGet.status).toBe(200);
+        });
     });
 });

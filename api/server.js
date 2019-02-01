@@ -6,6 +6,22 @@ const db = require('../games/gamesModel');
 
 server.use(express.json());
 
+server.get('/games/:id', (req, res) => {
+    const id = req.params.id;
+
+    db.findById(id)
+        .then(game => {
+            if (game) {
+                res.status(200).json(game)
+            } else {
+                res.status(404).json({ message: 'game does not exist' });
+            }
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+});
+
 server.get('/games', async (req, res) => {
     db.getAll()
         .then(games => {
