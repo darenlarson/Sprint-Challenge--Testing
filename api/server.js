@@ -1,5 +1,7 @@
 const express = require('express');
 
+const db = require('../games/gamesModel');
+
 const server = express();
 
 server.use(express.json());
