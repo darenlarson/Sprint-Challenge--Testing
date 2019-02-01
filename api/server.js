@@ -1,8 +1,8 @@
 const express = require('express');
 
+const server = express();
 const db = require('../games/gamesModel');
 
-const server = express();
 
 server.use(express.json());
 
@@ -16,7 +16,7 @@ server.get('/games', async (req, res) => {
 server.post('/games', async (req, res) => {
     const game = req.body;
 
-    if (game.title && game.genre) {
+    if (game.name && game.genre) {
         db.insert(game)
             .then(game => {
                 res.status(201).json({ message: 'Game successfully added' });
@@ -28,3 +28,5 @@ server.post('/games', async (req, res) => {
         res.status(422).json({ message: 'Game not added. Please provide all required fields.' });
     };
 });
+
+module.exports = server;
